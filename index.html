@@ -10,13 +10,18 @@
 
 		<link href="/dist/output.css" rel="stylesheet" />
 		<script src="script.js" defer></script>
+		<script src="apiScript.js" defer></script>
+		<script src="storage.js" defer></script>
 		<title>Health Facility Profile</title>
 	</head>
 	<body>
 		<form
 			action="#"
 			class="w-full h-full p-5 md:p-10 flex flex-col justify-start items-center"
-		>
+            enctype="multipart/form-data"
+            
+            >
+            <!-- onsubmit="return validateForm()"   -->
 			<h1
 				class="mb-4 text-3xl font-extrabold text-gray-900 md:text-5xl lg:text-6xl"
 			>
@@ -127,10 +132,12 @@
 								>Facility Name</label
 							>
 						</div>
+                        
 
 						<!-- Facility Type Options -->
 						<div class="relative z-0 w-full mb-6 group">
-							<select
+
+                            <select
 								type="select"
 								name="facility_type"
 								id="facility_type"
@@ -139,7 +146,8 @@
 								required
 							>
 								<option name="default" value="">Select an option</option>
-								<option name="hospital_general" value="hospital-general">
+								<!-- <option name="" id="apiData" value=""></option> -->
+								<!-- <option name="hospital_general" value="hospital-general">
 									Hospital (General)
 								</option>
 								<option
@@ -231,7 +239,7 @@
 									value="telemedicine-service-provider"
 								>
 									Telemedicine Service Provider
-								</option>
+								</option> -->
 							</select>
 							<label
 								for="facility_type"
@@ -239,6 +247,7 @@
 								>Facility Type</label
 							>
 						</div>
+  
 
 						<!-- Specialized Hospital Options -->
 						<fieldset
@@ -253,11 +262,29 @@
 								<h4>Select type of specialized hospital</h4>
 								<p class="text-sm text-gray-400">Multiple selection allowed</p>
 							</span>
+                            
 
 							<div
+                            id="facility_type_hospital_specialized_options"
 								class="w-full flex flex-wrap gap-4 justify-start items-start"
 							>
-								<div class="flex items-center mb-4">
+								<!-- <div  class="flex items-center mb-4">
+									<input
+										id="pediatric_hospital"
+										type="checkbox"
+										value="pediatric-hospital"
+										class="w-4 h-4 text-sky-400 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-sky-400 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 specialized-hospital-type"
+									/>
+									<label
+										for="pediatric_hospital"
+										class="ml-2 text-sm font-medium text-gray-900"
+										></label
+									>
+								</div> -->
+
+
+
+								<!-- <div class="flex items-center mb-4">
 									<input
 										id="pediatric_hospital"
 										type="checkbox"
@@ -269,8 +296,8 @@
 										class="ml-2 text-sm font-medium text-gray-900"
 										>Pediatric Hospital</label
 									>
-								</div>
-								<div class="flex items-center mb-4">
+								</div> -->
+								<!-- <div class="flex items-center mb-4">
 									<input
 										id="maternity_hospital"
 										type="checkbox"
@@ -334,7 +361,7 @@
 										class="ml-2 text-sm font-medium text-gray-900"
 										>Rehabilitation Hospital</label
 									>
-								</div>
+								</div> -->
 							</div>
 						</fieldset>
 
@@ -353,9 +380,11 @@
 							</span>
 
 							<div
+							id="facility_type_clinic_option"
+
 								class="w-full flex flex-wrap gap-4 justify-start items-start"
 							>
-								<div class="flex items-center mb-4">
+								<!-- <div class="flex items-center mb-4">
 									<input
 										id="general_outpatient_clinic"
 										type="checkbox"
@@ -393,7 +422,7 @@
 										class="ml-2 text-sm font-medium text-gray-900"
 										>Specialized Clinic</label
 									>
-								</div>
+								</div> -->
 							</div>
 						</fieldset>
 
@@ -469,12 +498,12 @@
 								required
 							>
 								<option name="default" value="">Select an option</option>
-								<option name="community_pharmacy" value="community-pharmacy">
+								<!-- <option name="community_pharmacy" value="community-pharmacy">
 									Community Pharmacy
 								</option>
 								<option name="hospital_pharmacy" value="hospital-pharmacy">
 									Hospital Pharmacy
-								</option>
+								</option> -->
 							</select>
 							<label
 								for="facility_type_pharmacy"
@@ -497,62 +526,8 @@
 							<div
 								class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
 							>
-								<div class="relative z-0 w-full mb-6 group">
-									<input
-										type="text"
-										name="facility_address"
-										id="facility_address"
-										class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-sky-400 peer"
-										placeholder=" "
-										required
-									/>
-									<label
-										for="facility_address"
-										class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-sky-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-										>Facility Address</label
-									>
-								</div>
-								<div class="relative z-0 w-full mb-6 group">
-									<select
-										type="select"
-										name="facility_area"
-										id="facility_area"
-										class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-sky-400 peer"
-										required
-									>
-										<option name="default" value="" selected>
-											Select an option
-										</option>
-										<option name="abokobi" value="abokobi">Abokobi</option>
-										<option name="haatso" value="haatso">Haatso</option>
-									</select>
-									<label
-										for="facility_area"
-										class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-sky-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-										>Facility Area</label
-									>
-								</div>
-								<div class="relative z-0 w-full mb-6 group">
-									<select
-										type="select"
-										name="facility_district"
-										id="facility_district"
-										class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-sky-400 peer"
-										required
-									>
-										<option name="default" value="" selected>
-											Select an option
-										</option>
-										<option name="abokobi" value="Accra">Accra</option>
-										<option name="haatso" value="Tema">Tema</option>
-									</select>
-									<label
-										for="facility_district"
-										class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-sky-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-										>Facility District</label
-									>
-								</div>
-								<div class="relative z-0 w-full mb-6 group">
+
+                                <div class="relative z-0 w-full mb-6 group">
 									<select
 										type="select"
 										name="facility_region"
@@ -572,6 +547,62 @@
 										for="facility_region"
 										class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-sky-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
 										>Facility Region</label
+									>
+								</div>
+
+								<div class="relative z-0 w-full mb-6 group">
+                                    <select
+                                    type="select"
+										name="facility_district"
+										id="facility_district"
+										class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-sky-400 peer"
+										required
+									>
+										<option name="default" value="" selected>
+											Select an option
+										</option>
+										<option name="abokobi" value="Accra">Accra</option>
+										<option name="haatso" value="Tema">Tema</option>
+									</select>
+									<label
+										for="facility_district"
+										class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-sky-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+										>Facility District</label
+									>
+								</div>
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <select
+                                        type="select"
+                                        name="facility_area"
+                                        id="facility_area"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-sky-400 peer"
+                                        required
+                                    >
+                                        <option name="default" value="" selected>
+                                            Select an option
+                                        </option>
+                                        <option name="abokobi" value="abokobi">Abokobi</option>
+                                        <option name="haatso" value="haatso">Haatso</option>
+                                    </select>
+                                    <label
+                                        for="facility_area"
+                                        class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-sky-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                        >Facility Area</label
+                                    >
+                                </div>
+								<div class="relative z-0 w-full mb-6 group">
+									<input
+										type="text"
+										name="facility_address"
+										id="facility_address"
+										class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-sky-400 peer"
+										placeholder=" "
+										required
+									/>
+									<label
+										for="facility_address"
+										class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-sky-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+										>Facility Address</label
 									>
 								</div>
 								<div class="relative z-0 w-full mb-6 group">
@@ -1192,6 +1223,8 @@
 					<div class="w-full mb-6 pt-10 px-5">
 						
                         <!-- Default -->
+                        <h1>Services Information</h1>
+                        <div id="services-infos"></div>
 
                         <h4 class="block" id="default_show">We're all good here, let's keep going.</h4>
 
@@ -1211,18 +1244,19 @@
                                     <span
                                         class="flex flex-col gap-1 w-fit justify-start items-start"
                                     >
-                                        <h4 class="text-xl text-sky-400 font-medium">Primary Care Services</h4>
-                                        <p class="text-sm text-gray-400">Multiple selection allowed</p>
+                                        <h4 id="primary_care_services_topics" class="text-xl text-sky-400 font-medium"></h4>
+                                        <!-- <p class="text-sm text-gray-400">Multiple selection allowed</p> -->
                                     </span>
     
                                     <button id="check_all_primary_care_services" type="button" class="h-fit px-3 py-2 text-xs font-medium text-center text-white bg-sky-500 rounded-lg hover:bg-sky-700">Select All</button>
                                 </div>
-                                
-    
+
                                 <div
-                                    class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 place-content-start place-items-start"
+                                id="general_practitioner_consultation_checkboxs"
+                                    class="w-full flex flex-wrap gap-4 justify-start items-start"
                                 >
-                                    <div class="flex items-center mb-4">
+                                
+                                    <!-- <div class="flex items-center mb-4">
                                         <input
                                             id="general_practitioner_consultation"
                                             type="checkbox"
@@ -1299,12 +1333,12 @@
                                             class="ml-2 text-sm font-medium text-gray-900"
                                             >Men's Health Services</label
                                         >
-                                    </div>
+                                    </div> -->
                                 </div>
                             </fieldset>
 
                              <!-- Specialist Care Services -->
-                            <fieldset
+                            <!-- <fieldset
                                 class="mb-6 animate-entry rounded-md overflow-hidden py-3 px-4 bg-gray-400/10"
                                 //id="facility_type_hospital_specialized_show"
                             >
@@ -1847,10 +1881,10 @@
                                         >
                                     </div>
                                 </div>
-                            </fieldset>
+                            </fieldset> -->
 
                              <!-- Diagnostics Services -->
-                            <fieldset
+                            <!-- <fieldset
                                 class="mb-6 animate-entry rounded-md overflow-hidden py-3 px-4 bg-gray-400/10"
                                 //id="facility_type_hospital_specialized_show"
                             >
@@ -1990,10 +2024,10 @@
                                     </div>
                                     
                                 </div>
-                            </fieldset>
+                            </fieldset> -->
 
                              <!-- Surgical Services -->
-                            <fieldset
+                            <!-- <fieldset
                                 class="mb-6 animate-entry rounded-md overflow-hidden py-3 px-4 bg-gray-400/10"
                                 //id="facility_type_hospital_specialized_show"
                             >
@@ -2120,10 +2154,10 @@
                                     </div>
                                     
                                 </div>
-                            </fieldset>
+                            </fieldset> -->
 
                             <!-- Emergency Care Services -->
-                            <fieldset
+                            <!-- <fieldset
                                 class="mb-6 animate-entry rounded-md overflow-hidden py-3 px-4 bg-gray-400/10"
                                 //id="facility_type_hospital_specialized_show"
                             >
@@ -2184,10 +2218,10 @@
                                         >
                                     </div>
                                 </div>
-                            </fieldset>
+                            </fieldset> -->
 
                             <!-- Maternal and Child Health Services -->
-                            <fieldset
+                            <!-- <fieldset
                                 class="mb-6 animate-entry rounded-md overflow-hidden py-3 px-4 bg-gray-400/10"
                                 //id="facility_type_hospital_specialized_show"
                             >
@@ -2262,10 +2296,10 @@
                                     </div>
                                     
                                 </div>
-                            </fieldset>
+                            </fieldset> -->
 
                             <!-- Rehabilitation Services -->
-                            <fieldset
+                            <!-- <fieldset
                                 class="mb-6 animate-entry rounded-md overflow-hidden py-3 px-4 bg-gray-400/10"
                                 //id="facility_type_hospital_specialized_show"
                             >
@@ -2340,10 +2374,10 @@
                                     </div>
                                     
                                 </div>
-                            </fieldset>
+                            </fieldset> -->
 
                             <!-- Mental Health Services -->
-                            <fieldset
+                            <!-- <fieldset
                                 class="mb-6 animate-entry rounded-md overflow-hidden py-3 px-4 bg-gray-400/10"
                                 //id="facility_type_hospital_specialized_show"
                             >
@@ -2405,10 +2439,10 @@
                                     </div>
                                     
                                 </div>
-                            </fieldset>
+                            </fieldset> -->
 
                             <!-- Pharmacy Services -->
-                            <fieldset
+                            <!-- <fieldset
                                 class="mb-6 animate-entry rounded-md overflow-hidden py-3 px-4 bg-gray-400/10"
                                 //id="facility_type_hospital_specialized_show"
                             >
@@ -2470,10 +2504,10 @@
                                     </div>
                                     
                                 </div>
-                            </fieldset>
+                            </fieldset> -->
 
                              <!-- Preventive Health Services -->
-                            <fieldset
+                            <!-- <fieldset
                                 class="mb-6 animate-entry rounded-md overflow-hidden py-3 px-4 bg-gray-400/10"
                                 //id="facility_type_hospital_specialized_show"
                             >
@@ -2549,10 +2583,10 @@
                                     
                                     
                                 </div>
-                            </fieldset>
+                            </fieldset> -->
 
                             <!-- Support Services -->
-                            <fieldset
+                            <!-- <fieldset
                                 class="mb-6 animate-entry rounded-md overflow-hidden py-3 px-4 bg-gray-400/10"
                                 //id="facility_type_hospital_specialized_show"
                             >
@@ -2629,7 +2663,7 @@
                                     
                                     
                                 </div>
-                            </fieldset>
+                            </fieldset> -->
                         </div>
 
                         <!-- Facility Type Select = Pharmacy -->
@@ -4914,7 +4948,7 @@
 							<p class="w-full text-left">
 								Is your health facility accredited by HEFRA?
 							</p>
-							<fieldset class="flex gap-3 justify-center items-center">
+							<fieldset id="hefraYesOrNoChoices" class="flex gap-3 justify-center items-center">
 								<legend class="sr-only">Yes or No Options</legend>
 
 								<div class="flex items-center mb-4">
@@ -4971,7 +5005,7 @@
 							<p class="w-full text-left">
 								Is your pharmacy accredited by the Pharmacy Council?
 							</p>
-							<fieldset class="flex gap-3 justify-center items-center">
+							<fieldset id="pcYesOrNoChoices" class="flex gap-3 justify-center items-center">
 								<legend class="sr-only">Yes or No Options</legend>
 
 								<div class="flex items-center mb-4">
@@ -5053,7 +5087,7 @@
 							<input
 								class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-sky-400 peer"
 								aria-describedby="other_accreditations_upload"
-								id="license"
+								id="otherlicense"
 								type="file"
 								multiple
 							/>
@@ -5202,7 +5236,7 @@
 							<input
 								id="submission_agreement"
 								type="checkbox"
-								value=""
+								value="yes"
 								class="w-8 h-8 text-sky-400 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-sky-400 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 clinic-type"
 							/>
 							<label
@@ -5217,7 +5251,7 @@
 					</div>
 					<div class="btns-group">
 						<a href="#" class="btn btn-prev">Previous</a>
-						<input type="submit" value="Submit" class="btn btn-submit" />
+						<input type="submit" value="Submit" onclick="pushFacilityData()" class="btn btn-submit" />
 					</div>
 				</div>
 			</div>
